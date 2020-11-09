@@ -1,0 +1,131 @@
+
+Que  ]  Move files from one folder to the respective folder
+#!/bin/bash  -x
+for file in `ls *.txt`
+do
+        foldername=`echo $file | awk -F. '{print $1}'`
+        if [ -d $foldername ]
+        then
+                rm -r $foldername
+        fi
+        mkdir $foldername
+        cp $file $foldername
+done
+  
+Que ]  Append Current date to all log files name which has extention  .log.1 from folder?  
+#!/bin/bash –x 
+for file in *.log.1;
+do
+	if [ -d $file ]
+	then
+	rm $file
+ 	fi
+	touch abc.log.1 def.log.1 ghi.log.1 jkl.log.1 mno.log.1
+	Date=`date +%d-%m-%y`
+	File=$file 	
+	Name=`echo  $file | awk -F. '{print $1}'`;
+ 	Ext=`echo $file | awk -F. '{print S2}'`;
+	NewFile=${file}-${Date}-${Ext}
+	cp $file $NewFile	
+done
+Que ] Check if Folder Exits or not .if its not present , create it
+#!/bin/bash -x
+if [ -d /f/terminalcommand/linuxcontent/demo1 ]
+then
+	echo "file exist"
+else
+	mkdir demo1
+	echo "file created"
+fi
+
+
+Que ] Execute cmd "hello" and "ls" and check its exicution status and print wether cmd exicuted or not ?
+Ans : #!/bin/bash -x 
+  if [ $? -eq 0 ]
+      then
+         echo "Executed"
+      else
+         echo "Not Executed"
+   fi
+Que  ] Find word “system” from all log file from folder /var/log and print number off occurrence more than 0 against each file 
+Cat * | grep -c -R 'system'
+
+DATA ANALYSIS AND MANUPILATION
+i] print employee name and total pay who has basepay > 10000
+Ans :- $ cat data.csv | awk '{ if($4 > 10000)} {print $2 " " $7 }'
+a] Read data.csv file from cmd and extract row which has basepay > 10000
+Ans :- #!/bin/bash
+for file in `cat data.csv | awk '{ if($4 > 10000) print $4}'`
+do
+   echo $file
+done
+
+b] Print only Employee name and basepay
+Ans :- $ cat data.csv | awk '{print $2 " "$7}'
+ii]what is the aggregate of totalpay of employee whose jobtitle is 'CAPTAIN'
+Ans :-  #!/bin/bash
+for file in `cat data.csv | grep -i captain | awk '{ sum=sum+$4 } {total=total+$8} { print tot_agree=sum*100/total }'`
+do
+   echo $file
+done
+a] read data file data.csv from cmd line and extract rows which have 'CAPTAIN' in the colom in jibtitle
+Ans:- #!/bin/bash
+for file in `cat data.csv | grep -i captain`
+do
+   echo $file
+done
+b] Extract totalpay and calculate sum print the result on terminal
+Ans:- $ Ans :-#!/bin/bash
+for file in `cat data.csv | awk '{ sum=sum+$7 } {print sum}'`
+do
+   echo $file
+done
+
+iii] print jobtitle and overtime pay who has overtimepay is btw in 7000 and 10000
+Ans :-$ cat data.csv | awk '{
+if ($5 > 7000 && $5 < 10000)
+print $3 "  " $5 }'
+a] read data.csv from cmd line and extract jobtitle and overtime pay for col range between 7000 and 1000 and b. print on terminal 
+Ans:- #!/bin/bash
+for file in `cat data.csv | awk '{ if($5 > 7000 && $5 < 10000) print $3 " " $5 }'`
+do
+   echo $file
+done
+iv] print avg on basepay
+Ans:- $  cat data.csv | awk '{sum=sum+$4} END{print avg=sum/NR-1}'
+a] read data file data.csv from cmd line and extract  basepay value and cal its average b.print on terminal
+Ans:- #!/bin/bash
+for file in `cat data.csv | awk '{ sum=sum+$4 } {print avg=sum/NR-1}'`
+do
+   echo $file
+done
+
+Que ] print last 4 frequently access urls count in sorted order from access.log 
+Ans :- cat access.log | awk '{print " / " $15}' | sort | uniq -c | sort -nr | tail -4
+Que ] print last 4 frequently access unique urls at particular hours from access.log 
+Ans:-  cat access.log | grep "[(14:59 | 15:0[0-3])]" | awk '{print " / " $15}' | sort | uniq -c | sort -nr | tail -4
+Que ] print list of web response code count in the unique sorted order at speicic hours
+Ans :- cat access.log | grep "[(14:00 | 15:00)]" | awk '{print $11}' | sort | uniq -c | sort -nr
+Que ] print list of last 10 unique sorted client IP from access.log
+Ans :- cat access.log | awk '{print $1}' | uniq -u  | sort nr | tail -10
+Que ] set env usersecret = "dh34xjaa23" its already not set
+Ans :- #!/bin/bash
+Var=printenv | grep 'usersecreate'
+if [ -z $Var ]
+then 
+echo "present" 
+else
+env usersecrete="dH34xJaa23"
+echo "created"
+fi
+Que ] find the diff between original file and updated file , apply changes to the original file ?
+Ans :- #!/bin/bash
+mkdir Original Updated
+cp Original_File.sh Original
+cp Updated_File.sh Updated
+diff -q Original Updated
+
+
+
+
+
